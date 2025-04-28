@@ -1,0 +1,33 @@
+
+services:
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8080:80"
+    volumes:
+      - .:/var/www/html
+      - ./html/storage:/var/www/html/storage
+      - ./html/application/storage:/var/www/html/application/storage
+
+    command: bash -c "chmod -R 775 /var/www/html/storage && chown -R www-data:www-data /var/www/html/storage && apache2-foreground"
+    depends_on:
+      - db
+    restart: unless-stopped
+
+  db:
+    image: mysql:5.7
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: growcrm
+      MYSQL_USER: growcrm_user
+      MYSQL_PASSWORD: password
+    ports:
+      - "3306:3306"
+    volumes:
+      - db_data:/var/lib/mysql
+    restart: unless-stopped
+
+volumes:
+  db_data:
