@@ -1,4 +1,3 @@
-
 services:
   web:
     build:
@@ -8,10 +7,38 @@ services:
       - "8080:80"
     volumes:
       - .:/var/www/html
-      - ./html/storage:/var/www/html/storage
-      - ./html/application/storage:/var/www/html/application/storage
-
-    command: bash -c "chmod -R 775 /var/www/html/storage && chown -R www-data:www-data /var/www/html/storage && apache2-foreground"
+    command: bash -c "
+      mkdir -p /var/www/html/updates &&
+      mkdir -p /var/www/html/storage/avatars &&
+      mkdir -p /var/www/html/storage/logos &&
+      mkdir -p /var/www/html/storage/logos/clients &&
+      mkdir -p /var/www/html/storage/logos/app &&
+      mkdir -p /var/www/html/storage/files &&
+      mkdir -p /var/www/html/storage/temp &&
+      mkdir -p /var/www/html/application/storage/app &&
+      mkdir -p /var/www/html/application/storage/app/public &&
+      mkdir -p /var/www/html/application/storage/cache &&
+      mkdir -p /var/www/html/application/storage/cache/data &&
+      mkdir -p /var/www/html/application/storage/debugbar &&
+      mkdir -p /var/www/html/application/storage/framework &&
+      mkdir -p /var/www/html/application/storage/framework/cache &&
+      mkdir -p /var/www/html/application/storage/framework/cache/data &&
+      mkdir -p /var/www/html/application/storage/framework/sessions &&
+      mkdir -p /var/www/html/application/storage/framework/testing &&
+      mkdir -p /var/www/html/application/storage/framework/views &&
+      mkdir -p /var/www/html/application/storage/logs &&
+      mkdir -p /var/www/html/application/bootstrap/cache &&
+      mkdir -p /var/www/html/application/storage/app/purifier &&
+      mkdir -p /var/www/html/application/storage/app/purifier/HTML &&
+      chmod -R 777 /var/www/html/updates &&
+      chmod -R 777 /var/www/html/storage &&
+      chmod -R 777 /var/www/html/application/storage &&
+      chmod -R 777 /var/www/html/application/bootstrap/cache &&
+      chown -R www-data:www-data /var/www/html/updates &&
+      chown -R www-data:www-data /var/www/html/storage &&
+      chown -R www-data:www-data /var/www/html/application/storage &&
+      chown -R www-data:www-data /var/www/html/application/bootstrap/cache &&
+      apache2-foreground"
     depends_on:
       - db
     restart: unless-stopped
