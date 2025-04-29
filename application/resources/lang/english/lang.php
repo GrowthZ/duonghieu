@@ -501,6 +501,7 @@ return [
     'edit' => "Edit",
     'email_delivery' => "Email Delivery",
     'email_address' => "Email Address",
+    'customer_code' => 'Customer code',
     'email_already_exists' => "Email address is already in use",
     'email_body' => "Email Body",
     'email_delivery_test' => "Email Delivery Test",

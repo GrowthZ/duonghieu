@@ -25,7 +25,8 @@ use Illuminate\Support\Facades\Mail;
 use Illuminate\Validation\Rule;
 use Validator;
 
-class Contacts extends Controller {
+class Contacts extends Controller
+{
 
     /**
      * The users repository instance.
@@ -42,7 +43,8 @@ class Contacts extends Controller {
      */
     protected $clientrepo;
 
-    public function __construct(UserRepository $userrepo, CategoryRepository $categoryrepo, ClientRepository $clientrepo) {
+    public function __construct(UserRepository $userrepo, CategoryRepository $categoryrepo, ClientRepository $clientrepo)
+    {
 
         //parent
         parent::__construct();
@@ -84,7 +86,8 @@ class Contacts extends Controller {
      * Display a listing of contacts
      * @return \Illuminate\Http\Response
      */
-    public function index() {
+    public function index()
+    {
 
         //get contacts
         request()->merge([
@@ -108,7 +111,8 @@ class Contacts extends Controller {
      *
      * @return bool
      */
-    public function show($id) {
+    public function show($id)
+    {
 
         //the user
         $contact = \App\Models\User::Where('id', $id)->first();
@@ -127,7 +131,8 @@ class Contacts extends Controller {
      * Show the form for creating a new contact.
      * @return \Illuminate\Http\Response
      */
-    public function create() {
+    public function create()
+    {
         //page settings
         $page = $this->pageSettings('create');
 
@@ -145,7 +150,8 @@ class Contacts extends Controller {
      * @param object ClientRepository instance of the repository
      * @return \Illuminate\Http\Response
      */
-    public function store(ClientRepository $clientrepo) {
+    public function store(ClientRepository $clientrepo)
+    {
 
         //custom error messages
         $messages = [
@@ -156,6 +162,13 @@ class Contacts extends Controller {
         $validator = Validator::make(request()->all(), [
             'first_name' => 'required',
             'last_name' => 'required',
+            'customer_code' => [
+                'required',
+                //ignore 'contact' type users
+                Rule::unique('users', 'customer_code')->where(function ($query) {
+                    return $query->whereIn('type', ['client', 'team']);
+                }),
+            ],
             'email' => [
                 'required',
                 'email',
@@ -202,6 +215,7 @@ class Contacts extends Controller {
             $user->account_owner = 'no';
             $user->first_name = request('first_name');
             $user->last_name = request('last_name');
+            $user->customer_code = request('customer_code');
             $user->clientid = request('clientid');
             $user->creatorid = auth()->user()->id;
             $user->unique_id = str_unique();
@@ -211,7 +225,6 @@ class Contacts extends Controller {
 
             //get user is
             $userid = $user->id;
-
         } else {
             if (!$userid = $this->userrepo->create(bcrypt($password))) {
                 abort(409);
@@ -261,7 +274,8 @@ class Contacts extends Controller {
      * @param int $id contact id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id) {
+    public function edit($id)
+    {
 
         //page settings
         $page = $this->pageSettings('edit');
@@ -277,7 +291,6 @@ class Contacts extends Controller {
 
         //process reponse
         return new EditResponse($payload);
-
     }
 
     /**
@@ -285,7 +298,8 @@ class Contacts extends Controller {
      * @param int $id contact id
      * @return \Illuminate\Http\Response
      */
-    public function update($id) {
+    public function update($id)
+    {
 
         //vars
         $original_owner = '';
@@ -297,6 +311,10 @@ class Contacts extends Controller {
             ],
             'last_name' => [
                 'required',
+            ],
+            'customer_code' => [
+                'required',
+                Rule::unique('users', 'customer_code')->ignore($id, 'id'),
             ],
             'email' => [
                 'required',
@@ -318,6 +336,7 @@ class Contacts extends Controller {
 
         //get the user
         $user = \App\Models\User::Where('id', $id)->first();
+
 
         //update the user
         if (!$this->userrepo->update($id)) {
@@ -356,7 +375,8 @@ class Contacts extends Controller {
      * Remove the specified contact from storage.
      * @return \Illuminate\Http\Response
      */
-    public function destroy() {
+    public function destroy()
+    {
 
         //delete each record in the array
         $allrows = array();
@@ -394,10 +414,10 @@ class Contacts extends Controller {
      * Update preferences of logged in user
      * @return null silent
      */
-    public function updatePreferences() {
+    public function updatePreferences()
+    {
 
         $this->userrepo->updatePreferences(auth()->id());
-
     }
 
     /**
@@ -406,7 +426,8 @@ class Contacts extends Controller {
      * @param array $data any other data (optional)
      * @return array
      */
-    private function pageSettings($section = '', $data = []) {
+    private function pageSettings($section = '', $data = [])
+    {
 
         //common settings
         $page = [
