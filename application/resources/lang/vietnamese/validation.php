@@ -133,6 +133,7 @@ return [
         'first_name' => strtolower(__('lang.first_name')),
         'last_name' => strtolower(__('lang.last_name')),
         'email' => strtolower(__('lang.email_address')),
+        'customer_code' => strtolower(__('lang.customer_code')),
         'password' => strtolower(__('lang.password')),
         'password_confirmation' => strtolower(__('lang.password_confirmation')),
         'city' => strtolower(__('lang.city')),
@@ -269,7 +270,7 @@ return [
         'foo' => strtolower(__('lang.bar')),
         'foo' => strtolower(__('lang.bar')),
         'foo' => strtolower(__('lang.bar')),
-               
+
 
         //settings - categories
         'category_name' => strtolower(__('lang.name')),

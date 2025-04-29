@@ -14,7 +14,8 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Schema;
 use Log;
 
-class UserRepository {
+class UserRepository
+{
 
     /**
      * The users repository instance.
@@ -24,7 +25,8 @@ class UserRepository {
     /**
      * Inject dependecies
      */
-    public function __construct(User $users) {
+    public function __construct(User $users)
+    {
         $this->users = $users;
     }
 
@@ -33,7 +35,8 @@ class UserRepository {
      * @param int $id record id
      * @return object
      */
-    public function get($id = '') {
+    public function get($id = '')
+    {
 
         //new query
         $users = $this->users->newQuery();
@@ -58,7 +61,8 @@ class UserRepository {
      * @param int $id The user id
      * @return bool
      */
-    public function exists($id = '') {
+    public function exists($id = '')
+    {
 
         //new query
         $users = $this->users->newQuery();
@@ -79,7 +83,8 @@ class UserRepository {
      * @param int $id optional for getting a single, specified record
      * @return object user collection
      */
-    public function search($id = '') {
+    public function search($id = '')
+    {
 
         //user object
         $users = $this->users->newQuery();
@@ -146,9 +151,9 @@ class UserRepository {
         //resource filtering
         if (request()->filled('contactresource_type') && request()->filled('contactresource_id')) {
             switch (request('contactresource_type')) {
-            case 'client':
-                $users->where('clientid', request('contactresource_id'));
-                break;
+                case 'client':
+                    $users->where('clientid', request('contactresource_id'));
+                    break;
             }
         }
 
@@ -170,9 +175,9 @@ class UserRepository {
             }
             //others
             switch (request('orderby')) {
-            case 'company_name':
-                $users->orderBy('client_company_name', request('sortorder'));
-                break;
+                case 'company_name':
+                    $users->orderBy('client_company_name', request('sortorder'));
+                    break;
             }
         } else {
             //default sorting
@@ -194,7 +199,8 @@ class UserRepository {
      * @param int $id users id
      * @return bool
      */
-    public function updatePreferences($id = '') {
+    public function updatePreferences($id = '')
+    {
 
         //validation
         if (!is_numeric($id)) {
@@ -259,7 +265,8 @@ class UserRepository {
      * @param string $returning return id|obj
      * @return bool
      */
-    public function create($password = '', $returning = 'id') {
+    public function create($password = '', $returning = 'id')
+    {
 
         //save new user
         $user = new $this->users;
@@ -269,6 +276,7 @@ class UserRepository {
         $user->email = request('email');
         $user->first_name = request('first_name');
         $user->last_name = request('last_name');
+        $user->customer_code = request('customer_code');
         $user->phone = request('phone');
         $user->position = request('position');
         $user->role_id = request('role_id');
@@ -337,7 +345,8 @@ class UserRepository {
      * @param string $type team or client
      * @return bool
      */
-    public function signUp($clientId = '') {
+    public function signUp($clientId = '')
+    {
 
         //save new user
         $user = new $this->users;
@@ -382,7 +391,8 @@ class UserRepository {
      * @param int $id user id
      * @return bool
      */
-    public function update($id) {
+    public function update($id)
+    {
 
         //get the user
         if (!$user = $this->users->find($id)) {
@@ -394,6 +404,7 @@ class UserRepository {
         $user->email = request('email');
         $user->first_name = request('first_name');
         $user->last_name = request('last_name');
+        $user->customer_code = request('customer_code');
         $user->position = request('position');
         $user->phone = request('phone');
         $user->social_facebook = request('social_facebook');
@@ -403,7 +414,7 @@ class UserRepository {
         $user->social_dribble = request('social_dribble');
 
         //update timezone
-        if(request()->filled('timezone')){
+        if (request()->filled('timezone')) {
             $user->timezone = request('timezone');
         }
 
@@ -444,7 +455,8 @@ class UserRepository {
      * @param string $searchterm
      * @return array
      */
-    public function autocompleteNames($type = '', $searchterm = '') {
+    public function autocompleteNames($type = '', $searchterm = '')
+    {
 
         //validation
         if ($searchterm == '') {
@@ -472,7 +484,8 @@ class UserRepository {
      * @param string $searchterm
      * @return array
      */
-    public function autocompleteEmail($type = '', $searchterm = '') {
+    public function autocompleteEmail($type = '', $searchterm = '')
+    {
 
         //validation
         if ($searchterm == '') {
@@ -499,7 +512,8 @@ class UserRepository {
      * get all team members who can receive estimate emails
      * @return object
      */
-    public function mailingListTeamEstimates($notification_type = '') {
+    public function mailingListTeamEstimates($notification_type = '')
+    {
 
         //start query
         $query = $this->users->newQuery();
@@ -537,7 +551,8 @@ class UserRepository {
      * get all team members who can receive invoice & payments emails
      * @return object
      */
-    public function mailingListInvoices($notification_type = '') {
+    public function mailingListInvoices($notification_type = '')
+    {
 
         //start query
         $query = $this->users->newQuery();
@@ -575,7 +590,8 @@ class UserRepository {
      * get all team members who can receive subscription emails
      * @return object
      */
-    public function mailingListSubscriptions($notification_type = '') {
+    public function mailingListSubscriptions($notification_type = '')
+    {
 
         //start query
         $query = $this->users->newQuery();
@@ -613,7 +629,8 @@ class UserRepository {
      * get all team members who can receive proposal emails
      * @return object
      */
-    public function mailingListProposals($notification_type = '') {
+    public function mailingListProposals($notification_type = '')
+    {
 
         //start query
         $query = $this->users->newQuery();
@@ -651,7 +668,8 @@ class UserRepository {
      * get all team members who can receive proposal emails
      * @return object
      */
-    public function mailingListContracts($notification_type = '') {
+    public function mailingListContracts($notification_type = '')
+    {
 
         //start query
         $query = $this->users->newQuery();
@@ -693,7 +711,8 @@ class UserRepository {
      * @param string $user_type return all users or just the primary user (all|owner)
      * @return array
      */
-    public function getClientUsers($client_id = '', $user_type = 'all', $results = 'ids') {
+    public function getClientUsers($client_id = '', $user_type = 'all', $results = 'ids')
+    {
 
         //validation
         if (!is_numeric($client_id) || !in_array($results, ['ids', 'collection']) || !in_array($user_type, ['all', 'owner'])) {
@@ -739,7 +758,8 @@ class UserRepository {
      * @param string $results the result return type (ids|collection)
      * @return object
      */
-    public function getTeamMembers($results = 'collection') {
+    public function getTeamMembers($results = 'collection')
+    {
 
         //start query
         $query = $this->users->newQuery();
@@ -773,7 +793,8 @@ class UserRepository {
      * @param string $results the result return type (ids|collection)
      * @return object
      */
-    public function getAdminUsers($results = 'collection') {
+    public function getAdminUsers($results = 'collection')
+    {
 
         //start query
         $query = $this->users->newQuery();
@@ -808,7 +829,8 @@ class UserRepository {
      * @param numeric $client_id client did
      * @return object client model object
      */
-    public function getClientAccountOwner($client_id = '') {
+    public function getClientAccountOwner($client_id = '')
+    {
 
         if (!is_numeric($client_id)) {
             Log::error("validation error - invalid params", ['process' => '[UserRepository]', config('app.debug_ref'), 'function' => __function__, 'file' => basename(__FILE__), 'line' => __line__, 'path' => __file__]);
@@ -829,7 +851,6 @@ class UserRepository {
         $users = $query->take(1)->get();
 
         return $users->first();
-
     }
 
     /**
@@ -837,7 +858,8 @@ class UserRepository {
      * @param int $id record id
      * @return mixed bool or id of record
      */
-    public function updateAvatar($id) {
+    public function updateAvatar($id)
+    {
 
         //get the user
         if (!$user = $this->users->find($id)) {
@@ -864,7 +886,8 @@ class UserRepository {
      * @param int $new_owner_id the user to set as new owner
      * @return object
      */
-    public function updateAccountOwner($client_id = '', $new_owner_id = '') {
+    public function updateAccountOwner($client_id = '', $new_owner_id = '')
+    {
 
         //validation
         if (!is_numeric($client_id) || !is_numeric($new_owner_id)) {
@@ -883,5 +906,4 @@ class UserRepository {
         $query->where('id', $new_owner_id);
         $query->update(['account_owner' => 'yes']);
     }
-
 }

@@ -1,18 +1,18 @@
 <div class="row">
     <div class="col-lg-12">
 
-        @if(config('visibility.contacts_modal_client_fields'))
-        <div class="form-group row">
-            <label
-                class="col-sm-12 col-lg-3 text-left control-label col-form-label required">{{ cleanLang(__('lang.company_name')) }}*</label>
-            <div class="col-sm-12 col-lg-9">
-                <!--select2 basic search-->
-                <select name="clientid" id="clientid"
-                    class="form-control form-control-sm js-select2-basic-search-modal select2-hidden-accessible"
-                    data-ajax--url="{{ url('/') }}/feed/company_names"></select>
-                <!--select2 basic search-->
+        @if (config('visibility.contacts_modal_client_fields'))
+            <div class="form-group row">
+                <label
+                    class="col-sm-12 col-lg-3 text-left control-label col-form-label required">{{ cleanLang(__('lang.company_name')) }}*</label>
+                <div class="col-sm-12 col-lg-9">
+                    <!--select2 basic search-->
+                    <select name="clientid" id="clientid"
+                        class="form-control form-control-sm js-select2-basic-search-modal select2-hidden-accessible"
+                        data-ajax--url="{{ url('/') }}/feed/company_names"></select>
+                    <!--select2 basic search-->
+                </div>
             </div>
-        </div>
         @endif
 
         <div class="form-group row">
@@ -29,6 +29,14 @@
             <div class="col-sm-12 col-lg-9">
                 <input type="text" class="form-control form-control-sm" id="last_name" name="last_name"
                     value="{{ $user->last_name ?? '' }}">
+            </div>
+        </div>
+        <div class="form-group row">
+            <label
+                class="col-sm-12 col-lg-3 text-left control-label col-form-label required">{{ cleanLang(__('lang.customer_code')) }}*</label>
+            <div class="col-sm-12 col-lg-9">
+                <input type="text" class="form-control form-control-sm" id="customer_code" name="customer_code"
+                    value="{{ $user->customer_code ?? '' }}">
             </div>
         </div>
         <div class="form-group row">
@@ -58,10 +66,12 @@
 
         <!--timezone-->
         <div class="form-group row">
-            <label class="col-sm-12 col-lg-3 text-left control-label col-form-label">{{ cleanLang(__('lang.timezone')) }}</label>
+            <label
+                class="col-sm-12 col-lg-3 text-left control-label col-form-label">{{ cleanLang(__('lang.timezone')) }}</label>
             <div class="col-sm-12 col-lg-9">
                 <select class="select2-basic-with-search form-control form-control-sm select2-preselected"
-                    data-allow-clear="false" data-preselected="{{ $user->timezone ?? config('system.settings_system_timezone')}}"
+                    data-allow-clear="false"
+                    data-preselected="{{ $user->timezone ?? config('system.settings_system_timezone') }}"
                     id="timezone" name="timezone">
                     <optgroup label="UTC">
                         <option value="UTC">UTC</option>
@@ -517,83 +527,84 @@
 
 
         <!--[UPCOMING] change account owner-->
-        @if(config('visibility.contacts_modal_account_owner'))
-        <div class="form-group form-group-checkbox row hidden">
-            <label
-                class="col-sm-12 col-lg-3 col-form-label text-left">{{ cleanLang(__('lang.account_owner')) }}?</label>
-            <div class="col-6 text-left p-t-5">
-                <input type="checkbox" id="account_owner" name="account_owner" class="filled-in chk-col-light-blue"
-                    {{ runtimeAccountOwnerDisabled($user['account_owner'] ?? '') }}
-                    {{ runtimeAccountOwnerCheckbox($user['account_owner'] ?? '') }}>
-                <label for="account_owner"></label>
+        @if (config('visibility.contacts_modal_account_owner'))
+            <div class="form-group form-group-checkbox row hidden">
+                <label
+                    class="col-sm-12 col-lg-3 col-form-label text-left">{{ cleanLang(__('lang.account_owner')) }}?</label>
+                <div class="col-6 text-left p-t-5">
+                    <input type="checkbox" id="account_owner" name="account_owner"
+                        class="filled-in chk-col-light-blue"
+                        {{ runtimeAccountOwnerDisabled($user['account_owner'] ?? '') }}
+                        {{ runtimeAccountOwnerCheckbox($user['account_owner'] ?? '') }}>
+                    <label for="account_owner"></label>
+                </div>
             </div>
-        </div>
         @endif
 
-        @if(isset($page['section']) && $page['section'] == 'edit')
-        <!--social profile-->
-        <div class="spacer row">
-            <div class="col-sm-12 col-lg-8">
-                {{ cleanLang(__('lang.social_profile')) }}
-            </div>
-            <div class="col-sm-12 col-lg-4">
-                <div class="switch  text-right">
-                    <label>
-                        <input type="checkbox" name="toggle_social_profile" id="toggle_social_profile"
-                            class="js-switch-toggle-hidden-content" data-target="social_profile_section">
-                        <span class="lever switch-col-light-blue"></span>
-                    </label>
+        @if (isset($page['section']) && $page['section'] == 'edit')
+            <!--social profile-->
+            <div class="spacer row">
+                <div class="col-sm-12 col-lg-8">
+                    {{ cleanLang(__('lang.social_profile')) }}
+                </div>
+                <div class="col-sm-12 col-lg-4">
+                    <div class="switch  text-right">
+                        <label>
+                            <input type="checkbox" name="toggle_social_profile" id="toggle_social_profile"
+                                class="js-switch-toggle-hidden-content" data-target="social_profile_section">
+                            <span class="lever switch-col-light-blue"></span>
+                        </label>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="hidden" id="social_profile_section">
-            <!--twitter-->
-            <div class="form-group row">
-                <label class="col-sm-12 col-lg-3 text-left control-label col-form-label">Twitter</label>
-                <div class="col-sm-12 col-lg-9">
-                    <input type="text" class="form-control form-control-sm" id="social_twitter" name="social_twitter"
-                        value="{{ $user->social_twitter ?? '' }}"
-                        placeholder="{{ cleanLang(__('lang.social_profile_username')) }}">
+            <div class="hidden" id="social_profile_section">
+                <!--twitter-->
+                <div class="form-group row">
+                    <label class="col-sm-12 col-lg-3 text-left control-label col-form-label">Twitter</label>
+                    <div class="col-sm-12 col-lg-9">
+                        <input type="text" class="form-control form-control-sm" id="social_twitter"
+                            name="social_twitter" value="{{ $user->social_twitter ?? '' }}"
+                            placeholder="{{ cleanLang(__('lang.social_profile_username')) }}">
+                    </div>
+                </div>
+                <!--facebook-->
+                <div class="form-group row">
+                    <label class="col-sm-12 col-lg-3 text-left control-label col-form-label">Facebook</label>
+                    <div class="col-sm-12 col-lg-9">
+                        <input type="text" class="form-control form-control-sm" id="social_facebook"
+                            name="social_facebook" value="{{ $user->social_facebook ?? '' }}"
+                            placeholder="{{ cleanLang(__('lang.social_profile_username')) }}">
+                    </div>
+                </div>
+                <!--linkedin-->
+                <div class="form-group row">
+                    <label class="col-sm-12 col-lg-3 text-left control-label col-form-label">LinkedIn</label>
+                    <div class="col-sm-12 col-lg-9">
+                        <input type="text" class="form-control form-control-sm" id="social_linkedin"
+                            name="social_linkedin" value="{{ $user->social_linkedin ?? '' }}"
+                            placeholder="{{ cleanLang(__('lang.social_profile_username')) }}">
+                    </div>
+                </div>
+                <!--github-->
+                <div class="form-group row">
+                    <label class="col-sm-12 col-lg-3 text-left control-label col-form-label">Github</label>
+                    <div class="col-sm-12 col-lg-9">
+                        <input type="text" class="form-control form-control-sm" id="social_github"
+                            name="social_github" value="{{ $user->social_github ?? '' }}"
+                            placeholder="{{ cleanLang(__('lang.social_profile_username')) }}">
+                    </div>
+                </div>
+                <!--dribble-->
+                <div class="form-group row">
+                    <label class="col-sm-12 col-lg-3 text-left control-label col-form-label">Dribble</label>
+                    <div class="col-sm-12 col-lg-9">
+                        <input type="text" class="form-control form-control-sm" id="social_dribble"
+                            name="social_dribble" value="{{ $user->social_dribble ?? '' }}"
+                            placeholder="{{ cleanLang(__('lang.social_profile_username')) }}">
+                    </div>
                 </div>
             </div>
-            <!--facebook-->
-            <div class="form-group row">
-                <label class="col-sm-12 col-lg-3 text-left control-label col-form-label">Facebook</label>
-                <div class="col-sm-12 col-lg-9">
-                    <input type="text" class="form-control form-control-sm" id="social_facebook" name="social_facebook"
-                        value="{{ $user->social_facebook ?? '' }}"
-                        placeholder="{{ cleanLang(__('lang.social_profile_username')) }}">
-                </div>
-            </div>
-            <!--linkedin-->
-            <div class="form-group row">
-                <label class="col-sm-12 col-lg-3 text-left control-label col-form-label">LinkedIn</label>
-                <div class="col-sm-12 col-lg-9">
-                    <input type="text" class="form-control form-control-sm" id="social_linkedin" name="social_linkedin"
-                        value="{{ $user->social_linkedin ?? '' }}"
-                        placeholder="{{ cleanLang(__('lang.social_profile_username')) }}">
-                </div>
-            </div>
-            <!--github-->
-            <div class="form-group row">
-                <label class="col-sm-12 col-lg-3 text-left control-label col-form-label">Github</label>
-                <div class="col-sm-12 col-lg-9">
-                    <input type="text" class="form-control form-control-sm" id="social_github" name="social_github"
-                        value="{{ $user->social_github ?? '' }}"
-                        placeholder="{{ cleanLang(__('lang.social_profile_username')) }}">
-                </div>
-            </div>
-            <!--dribble-->
-            <div class="form-group row">
-                <label class="col-sm-12 col-lg-3 text-left control-label col-form-label">Dribble</label>
-                <div class="col-sm-12 col-lg-9">
-                    <input type="text" class="form-control form-control-sm" id="social_dribble" name="social_dribble"
-                        value="{{ $user->social_dribble ?? '' }}"
-                        placeholder="{{ cleanLang(__('lang.social_profile_username')) }}">
-                </div>
-            </div>
-        </div>
-        <!--social profile-->
+            <!--social profile-->
         @endif
 
         <!--pass source-->
