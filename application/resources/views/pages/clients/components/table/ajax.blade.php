@@ -8,6 +8,11 @@
         {{ $client->client_id }}
     </td>
 
+    <td class="clients_col_company {{ config('table.tableconfig_column_2') }} tableconfig_column_2"
+        id="clients_col_id_{{ $client->customer_code }}">
+        <a href="/clients/{{ $client->client_id ?? '' }}">{{ str_limit($client->client_customer_code, 35) }}</a>
+    </td>
+
     <!--tableconfig_column_2 [client_company_name]-->
     <td class="clients_col_company {{ config('table.tableconfig_column_2') }} tableconfig_column_2"
         id="clients_col_id_{{ $client->client_id }}">
