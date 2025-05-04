@@ -1115,7 +1115,6 @@ function NXContacts() {
       first_name: "required",
       last_name: "required",
       email: "required",
-      customer_code: "required",
       clientid: "required",
     },
     submitHandler: function (form) {
@@ -2639,6 +2638,8 @@ function NXAddEditClients() {
         client_company_name: "required",
         first_name: "required",
         last_name: "required",
+        customer_code: "required",
+        tax_code: "required",
         email: "required",
       },
       submitHandler: function (form) {

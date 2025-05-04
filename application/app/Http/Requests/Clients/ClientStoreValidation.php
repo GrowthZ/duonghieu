@@ -63,6 +63,18 @@ class ClientStoreValidation extends FormRequest {
                         return $query->whereIn('type', ['client', 'team']);
                     }),
                 ],
+                'tax_code' => [
+                    'required',
+                    //ignore 'contact' type users
+                    Rule::unique('users', 'tax_code')->where(function ($query) {
+                        return $query->whereIn('type', ['client', 'team']);
+                    }),
+                ],
+                'customer_code' => [
+                    'required',
+                    //ignore 'contact' type users
+                    Rule::unique('clients', 'customer_code'),
+                ],
             ];
         }
 

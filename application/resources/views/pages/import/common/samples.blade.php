@@ -33,3 +33,9 @@
     | <a href="{{ url('storage/system/samples/import-clients.xlsx') }}" download>@lang('lang.xlsx_sample')</a>
 </div>
 @endif
+
+@if($type == 'product')
+<div class="x-splash-failed-text">
+    <a href="{{ url('storage/system/samples/product-clients.xlsx') }}" download>@lang('lang.xlsx_sample')</a>
+</div>
+@endif

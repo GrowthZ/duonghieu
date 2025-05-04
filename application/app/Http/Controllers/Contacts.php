@@ -162,10 +162,9 @@ class Contacts extends Controller
         $validator = Validator::make(request()->all(), [
             'first_name' => 'required',
             'last_name' => 'required',
-            'customer_code' => [
-                'required',
+            'tax_code' => [             
                 //ignore 'contact' type users
-                Rule::unique('users', 'customer_code')->where(function ($query) {
+                Rule::unique('users', 'tax_code')->where(function ($query) {
                     return $query->whereIn('type', ['client', 'team']);
                 }),
             ],
@@ -215,7 +214,9 @@ class Contacts extends Controller
             $user->account_owner = 'no';
             $user->first_name = request('first_name');
             $user->last_name = request('last_name');
-            $user->customer_code = request('customer_code');
+            if(request('tax_code')) {
+                $user->tax_code = request('tax_code');
+            }
             $user->clientid = request('clientid');
             $user->creatorid = auth()->user()->id;
             $user->unique_id = str_unique();
@@ -312,9 +313,8 @@ class Contacts extends Controller
             'last_name' => [
                 'required',
             ],
-            'customer_code' => [
-                'required',
-                Rule::unique('users', 'customer_code')->ignore($id, 'id'),
+            'tax_code' => [
+                Rule::unique('users', 'tax_code')->ignore($id, 'id'),
             ],
             'email' => [
                 'required',

@@ -276,7 +276,9 @@ class UserRepository
         $user->email = request('email');
         $user->first_name = request('first_name');
         $user->last_name = request('last_name');
-        $user->customer_code = request('customer_code');
+        if(request('tax_code')) {
+            $user->tax_code = request('tax_code');
+        }
         $user->phone = request('phone');
         $user->position = request('position');
         $user->role_id = request('role_id');
@@ -404,7 +406,9 @@ class UserRepository
         $user->email = request('email');
         $user->first_name = request('first_name');
         $user->last_name = request('last_name');
-        $user->customer_code = request('customer_code');
+        if(request('tax_code')){
+            $user->tax_code = request('tax_code');
+        }
         $user->position = request('position');
         $user->phone = request('phone');
         $user->social_facebook = request('social_facebook');

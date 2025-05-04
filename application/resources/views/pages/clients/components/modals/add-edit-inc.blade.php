@@ -71,6 +71,22 @@
                 <input type="text" class="form-control form-control-sm" id="email" name="email" placeholder="">
             </div>
         </div>
+          <div class="form-group row">
+            <label
+                class="col-sm-12 col-lg-3 text-left control-label col-form-label required">{{ cleanLang(__('lang.customer_code')) }}*</label>
+            <div class="col-sm-12 col-lg-9">
+                <input type="text" class="form-control form-control-sm" id="customer_code" name="customer_code"
+                    value="{{ $user->customer_code ?? '' }}">
+            </div>
+        </div>
+        <div class="form-group row">
+            <label
+                class="col-sm-12 col-lg-3 text-left control-label col-form-label required">{{ cleanLang(__('lang.tax_code')) }}*</label>
+            <div class="col-sm-12 col-lg-9">
+                <input type="text" class="form-control form-control-sm" id="tax_code" name="tax_code"
+                    value="{{ $user->tax_code ?? '' }}">
+            </div>
+        </div>
 
         <div class="form-group row">
             <label

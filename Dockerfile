@@ -10,9 +10,13 @@ RUN apt-get update && apt-get install -y \
     zip \
     unzip \
     git \
+    libzip-dev \  
+    && docker-php-ext-configure zip \
     && docker-php-ext-configure gd --with-freetype --with-jpeg \
     && docker-php-ext-install gd \
+    && docker-php-ext-install zip \  
     && docker-php-ext-install pdo pdo_mysql mysqli
+
 
 
 RUN a2enmod rewrite
