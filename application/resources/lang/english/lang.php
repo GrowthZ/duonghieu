@@ -277,6 +277,7 @@ return [
     'company_details' => "Company Details",
     'company_logo' => "Company Logo",
     'company_name' => "Company Name",
+    'customer_code' => "Company Code",
     'company' => "Company",
     'complete_your_payment' => "Complete Your Payment",
     'completed_projects' => "Completed Projects",

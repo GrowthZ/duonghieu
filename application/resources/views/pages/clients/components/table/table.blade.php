@@ -16,6 +16,13 @@
                         <!--tableconfig_column_2 [client_company_name]-->
                         <th
                             class="col_client_company_name {{ config('table.tableconfig_column_2') }} tableconfig_column_2">
+                            <a class="js-ajax-ux-request js-list-sorting" id="sort_client_customer_code"
+                                href="javascript:void(0)"
+                                data-url="{{ urlResource('/clients?action=sort&orderby=client_customer_code&sortorder=asc') }}">
+                                {{ cleanLang(__('lang.customer_code')) }}<span class="sorting-icons"><i
+                                        class="ti-arrows-vertical"></i></span></a></th>
+                        <th
+                            class="col_client_company_name {{ config('table.tableconfig_column_2') }} tableconfig_column_2">
                             <a class="js-ajax-ux-request js-list-sorting" id="sort_client_company_name"
                                 href="javascript:void(0)"
                                 data-url="{{ urlResource('/clients?action=sort&orderby=client_company_name&sortorder=asc') }}">
