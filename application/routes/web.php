@@ -1121,6 +1121,8 @@ Route::resource('import/leads', 'Import\Leads');
 //IMPORT CLIENTS
 Route::resource('import/clients', 'Import\Clients');
 
+Route::resource('import/product', 'Import\Product');
+
 //EXPORT TICKETS
 Route::post('export/tickets', 'Export\Tickets@index');
 

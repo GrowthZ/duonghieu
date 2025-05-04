@@ -134,6 +134,7 @@ return [
         'last_name' => strtolower(__('lang.last_name')),
         'email' => strtolower(__('lang.email_address')),
         'customer_code' => strtolower(__('lang.customer_code')),
+        'tax_code'=> strtolower(__('lang.tax_code')),
         'password' => strtolower(__('lang.password')),
         'password_confirmation' => strtolower(__('lang.password_confirmation')),
         'city' => strtolower(__('lang.city')),

@@ -13,6 +13,17 @@
         </div>
         @endif
 
+       
+        <button type="button" title="{{ cleanLang(__('lang.import_products')) }}" id="clients-import-button"
+            class="p-t-5 data-toggle-tooltip list-actions-button btn btn-page-actions waves-effect waves-dark edit-add-modal-button js-ajax-ux-request reset-target-modal-form"
+            data-toggle="modal" data-target="#commonModal" data-footer-visibility="hidden" data-top-padding="none"
+            data-action-url="{{ url('import/product') }}" data-action-method="POST"
+           
+            data-modal-title="@lang('lang.import_products')" data-url="{{ url('import/product/create') }}">
+            <i class="ti-import"></i>
+        </button>
+        
+
         <!--EXPORT-->
         @if(config('visibility.list_page_actions_exporting'))
         <button type="button" data-toggle="tooltip" title="@lang('lang.export_expenses')"

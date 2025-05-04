@@ -413,6 +413,9 @@ class ClientRepository {
         $client->client_company_name = request('client_company_name');
         $client->client_description = request('client_description');
         $client->client_phone = request('client_phone');
+        if(request('customer_code')){
+            $client->customer_code = request('customer_code');
+        }
         $client->client_website = request('client_website');
         $client->client_vat = request('client_vat');
         $client->client_billing_street = request('client_billing_street');
@@ -479,6 +482,9 @@ class ClientRepository {
             $user->unique_id = str_unique();
             $user->timezone = config('system.settings_system_timezone');
             $user->password = bcrypt($password);
+            if(request('tax_code')){
+                $user->tax_code = request('tax_code');
+            }
             $user->save();
 
         } else {
