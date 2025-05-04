@@ -1,4 +1,4 @@
-<div class="col-12 align-self-center hidden checkbox-actions box-shadow-minimum" id="items-checkbox-actions-container">
+{{-- <div class="col-12 align-self-center hidden checkbox-actions box-shadow-minimum" id="items-checkbox-actions-container">
     <!--button-->
     @if(config('visibility.action_buttons_edit'))
     <div class="x-buttons">
@@ -26,4 +26,4 @@
         {{ cleanLang(__('lang.no_actions_available')) }}
     </div>
     @endif
-</div>
+</div> --}}

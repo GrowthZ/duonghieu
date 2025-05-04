@@ -294,32 +294,18 @@ class Items extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function destroy() {
-
         //delete each record in the array
         $allrows = array();
         foreach (request('ids') as $id => $value) {
             //only checked items
             if ($value == 'on') {
                 //get the item
-                $item = \App\Models\Item::Where('item_id', $id)->first();
+                $item = \App\Models\Product::Where('id', $id)->first();
                 //delete client
                 $item->delete();
 
                 //delete any automation tasks
-                if ($tasks = \App\Models\ProductTask::Where('product_task_itemid', $id)->get()) {
-                    foreach ($tasks as $task) {
-                        //delete assigned users
-                        \App\Models\AutomationAssigned::Where('automationassigned_resource_type', 'product_task')
-                            ->Where('automationassigned_resource_id', $task->product_task_id)->delete();
-
-                        //delete dependencies
-                        \App\Models\ProductTasksDependency::Where('product_task_dependency_taskid', $task->product_task_id)->delete();
-
-                        //delete the task
-                        $task->delete();
-
-                    }
-                }
+               
 
                 //add to array
                 $allrows[] = $id;
@@ -340,7 +326,8 @@ class Items extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function bulkDelete() {
-
+       
+       
         //validation - post
         if (!is_array(request('item'))) {
             abort(409);
@@ -349,6 +336,7 @@ class Items extends Controller {
         //loop through and delete each one
         $deleted = 0;
         foreach (request('item') as $item_id => $value) {
+            
             if ($value == 'on') {
                 //get the item
                 if ($items = $this->itemrepo->search($item_id)) {
